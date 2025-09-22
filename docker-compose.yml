@@ -44,14 +44,14 @@ services:
     command: >
       bash -lc "
         python manage.py migrate &&
-        python manage.py shell -c \"import init_superuser\" &&
+        python manage.py shell -c \"import init_superuser\" || true &&
         python manage.py runserver 0.0.0.0:8000
       "
     restart: unless-stopped
 
   frontend:
     build:
-      context: ./Frontend   # Respeta la mayúscula si tu carpeta es 'Frontend'
+      context: ./Frontend    # cuidado con la mayúscula
     environment:
       VITE_API_URL: ${VITE_API_URL}
     ports:
