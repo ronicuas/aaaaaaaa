@@ -1,14 +1,15 @@
 FROM node:20-alpine
 
+# Carpeta de trabajo dentro del contenedor
 WORKDIR /usr/src/app
 
-# Copiamos solo los manifests primero
-COPY package*.json ./
+# Copiamos sólo los manifiestos primero para aprovechar la cache de dependencias
+COPY package.json package-lock.json ./
 
-# Instalamos dependencias
-RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+# Instala dependencias. Si el lock no está sincronizado, hace npm install como fallback.
+RUN npm ci || npm install
 
-# Copiamos el resto del código (ya sin node_modules gracias al .dockerignore)
+# Copiamos el resto del código
 COPY . .
 
 EXPOSE 5173

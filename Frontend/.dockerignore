@@ -1,5 +1,8 @@
+# Evita copiar estas carpetas/archivos al contexto de build
 node_modules
 dist
-build
-npm-debug.log*
-yarn-error.log*
+.git
+.DS_Store
+Thumbs.db
+# Asegúrate de NO ignorar package-lock.json (lo necesitamos para npm ci)
+# package-lock.json
